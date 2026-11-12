@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Classic Academy - I.T. & Office Automation Test</title>
+<style>
+:root{--bg:#f3f5f9;--card:#fff;--ink:#172033;--muted:#657089;--accent:#e65332;--line:#dce2ec;--green:#16834a;--greenbg:#e6f6ed;--red:#c83232;--redbg:#fff0f0}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Arial, sans-serif}
+header{background:#172033;color:white;padding:28px 18px;text-align:center;border-bottom:5px solid var(--accent)}
+header h1{margin:0;font-size:clamp(22px,4vw,32px)}header p{margin:6px 0 0;color:#d9dfeb}
+main{max-width:900px;margin:26px auto;padding:0 15px 40px}.intro,.question,.result{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:16px;box-shadow:0 4px 16px #1720330a}
+.intro h2{margin:0 0 8px}.meta{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:14px}
+.section-title{margin:28px 2px 12px;font-size:21px}.question h3{font-size:16px;margin:0 0 12px}.qnum{color:var(--accent);font-weight:700}
+.options{display:grid;gap:8px}.option{display:flex;align-items:flex-start;gap:10px;padding:9px 11px;border:1px solid var(--line);border-radius:8px;cursor:pointer}.option:hover{background:#f8f9fc}.option input{margin-top:5px;accent-color:var(--accent)}.option.correct{background:var(--greenbg);border-color:var(--green);color:#105d36}.option.wrong{background:var(--redbg);border-color:var(--red);color:#9e2020}
+input[type=text]{width:100%;padding:11px;border:1px solid var(--line);border-radius:8px;font:inherit}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0}.btn{border:0;border-radius:8px;padding:12px 20px;font-weight:700;font-size:15px;cursor:pointer}.submit{background:var(--accent);color:white}.reset{background:#e5e9f1;color:#172033}
+#result{display:none}.score{font-size:26px;font-weight:800;color:var(--accent)}.status{font-weight:700}.explanation{font-size:13px;color:var(--muted);margin-top:7px}
+footer{text-align:center;color:var(--muted);padding:20px;font-size:13px}
+@media(max-width:600px){.intro,.question,.result{padding:15px}.meta{gap:8px;flex-direction:column}}
+</style>
+</head>
+<body>
+<header>
+  <h1>CLASSIC ACADEMY OF COMPUTER SCIENCE</h1>
+  <p>Larkana, Sindh · I.T. & Office Automation Test</p>
+  <p>by <b>Wajid Korkani</b></p>
+</header>
+<main>
+  <section class="intro">
+    <h2>Candidate Test</h2>
+    <p>Answer all questions. Each question carries <strong>1 mark</strong>. Your result and answer review will appear after submission.</p>
+    <div class="meta"><span>Total Questions: <b>32</b></span><span>Total Marks: <b>32</b></span><span>Sections: <b>22 MCQs · 6 True/False · 4 Fill in the blanks</b></span></div>
+    <p><label for="candidate"><strong>Candidate Name (optional)</strong></label><br><input id="candidate" type="text" placeholder="Enter your name"></p>
+  </section>
+  <form id="testForm">
+    <h2 class="section-title">Section A — Multiple Choice Questions (22 Marks)</h2>
+    <div id="mcqs"></div>
+    <h2 class="section-title">Section B — True / False (6 Marks)</h2>
+    <div id="tf"></div>
+    <h2 class="section-title">Section C — Fill in the Blanks (4 Marks)</h2>
+    <div id="blanks"></div>
+    <div class="actions">
+      <button class="btn submit" type="submit">Submit Test</button>
+      <button class="btn reset" type="reset">Clear Answers</button>
+    </div>
+  </form>
+  <section id="result" class="result" aria-live="polite"></section>
+</main>
+<footer>Prepared from the I.T. & Office Automation handouts supplied by Classic Academy.</footer>
+<script>
+const mcqQuestions = [
+["What does the word “Compute” mean?",["To communicate","To calculate","To store","To print"],1],
+["Which unit processes data and executes program instructions?",["Monitor","CPU","Keyboard","Printer"],1],
+["Which of the following is raw facts and figures?",["Information","Software","Data","Output"],2],
+["Which is an example of an input device?",["Speaker","Projector","Scanner","Printer"],2],
+["Which device produces a paper copy (hard copy)?",["Printer","Mouse","Keyboard","Monitor"],0],
+["How many bits are in one byte?",["4","8","16","1024"],1],
+["Which memory is temporary and volatile?",["ROM","RAM","CD-ROM","Hard disk"],1],
+["Which part of the CPU performs arithmetic operations and logical decisions?",["Control Unit","Memory Unit","ALU","Input Unit"],2],
+["What is the main purpose of an operating system?",["Create presentations only","Supervise computer operations and resources","Print documents only","Browse websites only"],1],
+["Which Windows feature holds files before final deletion?",["Taskbar","Desktop","Recycle Bin","Control Panel"],2],
+["Which shortcut selects the entire document in MS Word?",["Ctrl + A","Ctrl + S","Ctrl + P","Ctrl + X"],0],
+["Which MS Word shortcut makes selected text bold?",["Ctrl + I","Ctrl + B","Ctrl + U","Ctrl + E"],1],
+["MS Excel is mainly used for:",["Presentations","Accounting and calculations","Web browsing","Email"],1],
+["Which symbol is used to start a formula in Excel?",["#","@","=","&"],2],
+["Which Excel function adds numbers?",["AVERAGE","SUM","LOWER","COUNT"],1],
+["Which Excel function converts text to uppercase?",["UPPER","PROPER","TRIM","LEFT"],0],
+["MS PowerPoint is used for:",["Calculations","Presentations","File compression","Email"],1],
+["Which key starts a PowerPoint slide show from the beginning?",["F2","F5","F7","F12"],1],
+["The Internet is commonly described as:",["A single computer","The network of networks","A printer network only","An operating system"],1],
+["What was the Internet first known as?",["WWW","Ethernet","ARPANET","Intranet"],2],
+["Which protocol is used to transmit web documents?",["HTTP","POP3","FTP","SMTP"],0],
+["Which software application is used to access and view web pages?",["Compiler","Web browser","Spreadsheet","Operating system"],1]
+];
+const tfQuestions = [
+["A byte consists of 8 bits.",true],
+["ROM is temporary and volatile memory.",false],
+["A folder is a container where files can be stored.",true],
+["An intranet is a private network within an organization.",true],
+["Email is generally considered real-time chat.",false],
+["A search engine uses keywords entered by a user to find information.",true]
+];
+const blankQuestions = [
+["The smallest unit of memory is the ________.",["bit"]],
+["The full form of CPU is ________.",["central processing unit"]],
+["The Excel function that calculates the average is ________.",["average"]],
+["The full form of WWW is ________.",["world wide web","worldwide web"]]
+];
+const mcqEl=document.getElementById("mcqs"), tfEl=document.getElementById("tf"), blankEl=document.getElementById("blanks");
+function addQuestion(container,html){container.insertAdjacentHTML("beforeend",html)}
+mcqQuestions.forEach((q,i)=>{let n=i+1;addQuestion(mcqEl,`<section class="question" id="q${n}"><h3><span class="qnum">${n}.</span> ${q[0]}</h3><div class="options">${q[1].map((v,j)=>`<label class="option"><input type="radio" name="q${n}" value="${j}"><span>${String.fromCharCode(65+j)}. ${v}</span></label>`).join("")}</div><div class="explanation" id="feedback${n}"></div></section>`)});
+tfQuestions.forEach((q,i)=>{let n=23+i;addQuestion(tfEl,`<section class="question" id="q${n}"><h3><span class="qnum">${n}.</span> ${q[0]}</h3><div class="options">${["True","False"].map((v,j)=>`<label class="option"><input type="radio" name="q${n}" value="${j===0}"><span>${v}</span></label>`).join("")}</div><div class="explanation" id="feedback${n}"></div></section>`)});
+blankQuestions.forEach((q,i)=>{let n=29+i;addQuestion(blankEl,`<section class="question" id="q${n}"><h3><span class="qnum">${n}.</span> ${q[0]}</h3><input type="text" name="q${n}" autocomplete="off" placeholder="Type your answer"><div class="explanation" id="feedback${n}"></div></section>`)});
+const norm=s=>s.trim().toLowerCase().replace(/[.,!?]/g,"").replace(/\s+/g," ");
+document.getElementById("testForm").addEventListener("submit",e=>{
+ e.preventDefault();let score=0,answered=0;const total=32;
+ mcqQuestions.forEach((q,i)=>{let n=i+1,chosen=document.querySelector(`input[name="q${n}"]:checked`),correct=q[2];if(chosen)answered++;let labels=document.querySelectorAll(`#q${n} .option`);labels[correct].classList.add("correct");if(chosen&&Number(chosen.value)===correct)score++;else if(chosen)labels[Number(chosen.value)].classList.add("wrong");document.getElementById(`feedback${n}`).textContent=`Correct answer: ${String.fromCharCode(65+correct)}. ${q[1][correct]}`});
+ tfQuestions.forEach((q,i)=>{let n=23+i,chosen=document.querySelector(`input[name="q${n}"]:checked`),correct=String(q[1]);if(chosen)answered++;let labels=document.querySelectorAll(`#q${n} .option`),idx=correct==="true"?0:1;labels[idx].classList.add("correct");if(chosen&&chosen.value===correct)score++;else if(chosen)labels[chosen.value==="true"?0:1].classList.add("wrong");document.getElementById(`feedback${n}`).textContent=`Correct answer: ${q[1]?"True":"False"}`});
+ blankQuestions.forEach((q,i)=>{let n=29+i,input=document.querySelector(`[name="q${n}"]`),val=norm(input.value);if(val)answered++;let ok=q[1].some(a=>norm(a)===val);if(ok){score++;input.style.borderColor="var(--green)";input.style.background="var(--greenbg)"}else{input.style.borderColor="var(--red)";input.style.background="var(--redbg)"}document.getElementById(`feedback${n}`).textContent=`${ok?"Correct":"Incorrect"} — Accepted answer: ${q[1][0]}`});
+ const result=document.getElementById("result"),pct=Math.round(score/total*100),name=document.getElementById("candidate").value.trim();
+ result.innerHTML=`<h2>Test Result</h2>${name?`<p>Candidate: <strong>${name.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}</strong></p>`:""}<p class="score">${score} / ${total} Marks</p><p><strong>Percentage:</strong> ${pct}%</p><p><strong>Answered:</strong> ${answered} / ${total}</p><p class="status">${score===total?"Excellent! All answers are correct.":score>=20?"Good effort! Review the highlighted answers.":"Keep practicing and try again."}</p><p><span style="color:var(--green);font-weight:bold">Green = correct answer</span> &nbsp; <span style="color:var(--red);font-weight:bold">Red = your incorrect answer</span></p>`;
+ result.style.display="block";result.scrollIntoView({behavior:"smooth",block:"start"});
+ document.querySelectorAll("#testForm input").forEach(el=>{if(el.type!=="text")el.disabled=true;else el.readOnly=true});
+ document.querySelector(".submit").disabled=true;
+});
+document.querySelector(".reset").addEventListener("click",()=>{setTimeout(()=>{document.querySelectorAll(".option").forEach(x=>x.classList.remove("correct","wrong"));document.querySelectorAll(".explanation").forEach(x=>x.textContent="");document.querySelectorAll('input[type="text"]').forEach(x=>{x.readOnly=false;x.style="";});document.querySelectorAll('input[type="radio"]').forEach(x=>x.disabled=false);document.querySelector(".submit").disabled=false;document.getElementById("result").style.display="none";},0)});
+</script>
+</body>
+</html>
